@@ -64,10 +64,10 @@ not {a} = [0]
 or [1] [1] <- {a} = [1] <- {a}
 or [1] [1] <- {a}
 {a} = [1]
-andNN [1] [1] = [0]
-andNN [0] [1] = [0]
-andNN [1] [0] = [0]
-andNN [0] [0] = [1]
+nor [1] [1] = [0]
+nor [0] [1] = [0]
+nor [1] [0] = [0]
+nor [0] [0] = [1]
 or {a} {b} <- {c}
 not {c} <- {d}
 [0] <- {a}
@@ -86,25 +86,25 @@ not {c} <- {d}
 {d} = [0]
 <- {a}
 <- {b}
-andNN {a} {b} = {d}
-or {a} {b} <- {c} not {a} <- {d} = andNN {a} {b} {d}
-and {a} {b} <- {c} not {a} <- {d} = nor {a} {b} {d}
-nor [1] [1] = [0]
-nor [1] [0] = [0]
-nor [0] [1] = [0]
-nor [0] [0] = [1]
-or {a} {b} <- {c} nor {a} {b} <- {d} and {c} {d} <- {e} = 11001 {a} {b} {e}
-not {a} <- {c} not {b} <- {d} and {a} {d} <- {e} and {b} {c} <- {f} or {e} {f} <- {g} = 11001 {a} {b} {g}
-11001 {a} {b} <- {c} and {a} {b} {d} = thing {a} {b} {c} {d}
-thing [1] [1] = [0] [1]
-thing [0] [1] = [1] [0]
-thing [1] [0] = [1] [0]
-thing [0] [0] = [0] [0]
-thing {a} {b} <- {d} {e} thing {c} {d} <- {f} {g} or {e} {g} <- {h} = 1111 {a} {b} {c} {f} {h}
-1111 {c} {f} {g} <- 011001 011011 1111 {b} {e} 011011 <- 011000 011100 1111 {a} {d} 011100 <- {h} 011010 = 1111 {a} {b} {c} {d} {e} {f} {g} {h} 011000 011001 011010
-1111 [0] [1] [0] [1] [1] [0] [1] = [0] [0] [1] [1]
-1111 [1] [0] [1] [0] [0] [0] [1] [0] [0] = [1] [1] [0] [0] [0]
-andNN {a} {d} <- {c} andNN {c} {b} <- {d} = 111 {a} {b} {c} {d}
+nor {a} {b} = {d}
+or {a} {b} <- {c} not {a} <- {d} = nor {a} {b} {d}
+and {a} {b} <- {c} not {a} <- {d} = andNN {a} {b} {d}
+andNN [1] [1] = [0]
+andNN [1] [0] = [0]
+andNN [0] [1] = [0]
+andNN [0] [0] = [1]
+or {a} {b} <- {c} andNN {a} {b} <- {d} and {c} {d} <- {e} = xor {a} {b} {e}
+not {a} <- {c} not {b} <- {d} and {a} {d} <- {e} and {b} {c} <- {f} or {e} {f} <- {g} = xor {a} {b} {g}
+xor {a} {b} <- {c} and {a} {b} {d} = add_carry {a} {b} {c} {d}
+add_carry [1] [1] = [0] [1]
+add_carry [0] [1] = [1] [0]
+add_carry [1] [0] = [1] [0]
+add_carry [0] [0] = [0] [0]
+add_carry {a} {b} <- {d} {e} add_carry {c} {d} <- {f} {g} or {e} {g} <- {h} = add_carry_2 {a} {b} {c} {f} {h}
+add_carry_2 {c} {f} {g} <- {j} {l} add_carry_2 {b} {e} {l} <- {i} {m} add_carry_2 {a} {d} {m} <- {h} {k} = add_carry_2 {a} {b} {c} {d} {e} {f} {g} {h} {i} {j} {k}
+add_carry_2 [0] [1] [0] [1] [1] [0] [1] = [0] [0] [1] [1]
+add_carry_2 [1] [0] [1] [0] [0] [0] [1] [0] [0] = [1] [1] [0] [0] [0]
+nor {a} {d} <- {c} nor {c} {b} <- {d} = 111 {a} {b} {c} {d}
 [1] <- {d}
 111 [0] [0] = [0] [1]
 111 [0] [1] = [1] [0]
